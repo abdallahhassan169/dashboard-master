@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-transform: capitalize;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  list-style:none
+}
+
+.box_contain {
+  background-color: #fff;
+  padding: 25px;
+  box-shadow: 2px 2px 7px #999;
+  color: #2c2c2c;
+  
+}
+
+
+.form_box {
+  padding: 20px 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 2px 4px 6px #999;
+
+}
