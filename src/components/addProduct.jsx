@@ -5,11 +5,11 @@ import { useTheme } from "@emotion/react";
 import { Close } from "@mui/icons-material";
 import { postApi } from "../utilis/postApi";
 import Header from "./header";
-const AddProduct = ({ onClose, onsubmit, setFiles }) => {
+const AddProduct = ({ onClose, onsubmit, setFiles, editData }) => {
+  console.log(editData, "edi");
   const theme = useTheme();
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
-
   const onSubmitHandler = async (data) => {
     try {
       await onsubmit(data);
@@ -62,6 +62,7 @@ const AddProduct = ({ onClose, onsubmit, setFiles }) => {
               {...register("name", { required: "This field is required!" })}
               error={!!errors.name}
               helperText={errors?.name?.message}
+              defaultValue={editData?.name || ""}
             />
             <TextField
               id="description"
@@ -73,6 +74,7 @@ const AddProduct = ({ onClose, onsubmit, setFiles }) => {
               })}
               error={!!errors.description}
               helperText={errors?.description?.message}
+              defaultValue={editData?.description || ""}
             />
             <TextField
               id="category"
@@ -82,6 +84,7 @@ const AddProduct = ({ onClose, onsubmit, setFiles }) => {
               {...register("category", { required: "This field is required!" })}
               error={!!errors.category}
               helperText={errors?.category?.message}
+              defaultValue={editData?.category || ""}
             />
             <TextField
               id="usd_price"
@@ -93,6 +96,7 @@ const AddProduct = ({ onClose, onsubmit, setFiles }) => {
               })}
               error={!!errors.usd_price}
               helperText={errors?.usd_price?.message}
+              defaultValue={editData?.usd_price || ""}
             />
             <TextField
               id="egp_price"
@@ -104,6 +108,7 @@ const AddProduct = ({ onClose, onsubmit, setFiles }) => {
               })}
               error={!!errors.egp_price}
               helperText={errors?.egp_price?.message}
+              defaultValue={editData?.egp_price || ""}
             />
             <TextField
               id="brand_name"
@@ -115,21 +120,18 @@ const AddProduct = ({ onClose, onsubmit, setFiles }) => {
               })}
               error={!!errors.brand_name}
               helperText={errors?.brand_name?.message}
+              defaultValue={editData?.brand_name || ""}
             />
             <TextField
               id="image"
-              label="image"
+              label="Image"
               type="file"
               variant="filled"
-              {...register("image", {
-                required: "This images is required!",
-              })}
+              {...register("image")}
               onChange={(e) => setFiles(e.target.files[0])}
-              error={!!errors.images}
-              helperText={errors?.remaining_qty?.message}
-              inputProps={{
-                multiple: true,
-              }}
+              error={!!errors.image}
+              helperText={errors?.image?.message}
+              inputProps={{ accept: "image/*" }}
             />
             <TextField
               id="total_qty"
@@ -141,17 +143,17 @@ const AddProduct = ({ onClose, onsubmit, setFiles }) => {
               })}
               error={!!errors.total_qty}
               helperText={errors?.total_qty?.message}
+              defaultValue={editData?.total_qty || ""}
             />
             <TextField
               id="remaining_qty"
               label="Remaining Quantity"
               type="number"
               variant="filled"
-              {...register("remaining_qty", {
-                required: "This field is required!",
-              })}
+              {...register("remaining_qty")}
               error={!!errors.remaining_qty}
               helperText={errors?.remaining_qty?.message}
+              defaultValue={editData?.remaining_qty || ""}
             />
             <Button
               type="submit"
@@ -159,7 +161,7 @@ const AddProduct = ({ onClose, onsubmit, setFiles }) => {
                 textTransform: "capitalize",
                 background: theme.palette.green,
                 color: "#fff",
-                ["&:hover"]: {
+                "&:hover": {
                   border: `1px solid ${theme.palette.green}`,
                   color: theme.palette.green,
                 },

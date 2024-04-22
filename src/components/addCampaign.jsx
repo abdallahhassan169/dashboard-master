@@ -14,7 +14,7 @@ import { postApi } from "../utilis/postApi";
 import DropDown from "./dropDown";
 import React from "react";
 import AutoComplete from "./autoComplete";
-const AddCampaign = ({ onClose, onsubmit, setFiles }) => {
+const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
   const theme = useTheme();
   const [data, setData] = React.useState([]);
   const [city, setCity] = React.useState([]);
@@ -74,6 +74,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles }) => {
               autoComplete="off"
               id="name"
               label="Name"
+              value={editData?.name}
               type="text"
               variant="filled"
               {...register("name", {
@@ -88,6 +89,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles }) => {
               type="date"
               variant="filled"
               InputLabelProps={{ shrink: true }}
+              value={editData?.start_date}
               {...register("start_date", {
                 required: "This field is required!",
               })}
@@ -99,6 +101,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles }) => {
               label="Draw Date"
               type="date"
               variant="filled"
+              value={editData?.draw_date}
               InputLabelProps={{ shrink: true }}
               {...register("draw_date", {
                 required: "This field is required!",
@@ -114,6 +117,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles }) => {
               {...register("prize_name", {
                 required: "This field is required!",
               })}
+              value={editData?.prize_name}
               error={!!errors.prize_name}
               helperText={errors?.prize_name?.message}
             />
@@ -125,6 +129,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles }) => {
               {...register("prize_url", {
                 required: "This field is required!",
               })}
+              value={editData?.prize_url}
               error={!!errors.prize_url}
               helperText={errors?.prize_url?.message}
             />
@@ -136,6 +141,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles }) => {
               {...register("remaining_qty", {
                 required: "This field is required!",
               })}
+              value={editData?.remaining_qty}
               error={!!errors.remaining_qty}
               helperText={errors?.remaining_qty?.message}
             />
@@ -171,6 +177,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles }) => {
               label="Target"
               type="number"
               variant="filled"
+              value={editData?.target}
               {...register("target", {
                 required: "This field is required!",
               })}
@@ -182,6 +189,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles }) => {
               label="Note"
               type="text"
               variant="filled"
+              value={editData?.note}
               multiline
               rows={4}
               {...register("note")}

@@ -10,10 +10,11 @@ import Search from "../components/search";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "material-react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
 export default function Orders() {
   const theme = useTheme();
   const [data, setData] = React.useState([]);
+  const nav = useNavigate();
 
   const req = async (data) => {
     const res = await postApi("/get_admin_orders", data);
@@ -40,6 +41,23 @@ export default function Orders() {
       field: "email",
       headerName: "email",
       flex: 1,
+    },
+    {
+      field: "actions",
+      headerName: "Show",
+      flex: 1,
+
+      renderCell: (params) => (
+        <td>
+          <RemoveRedEye
+            sx={{
+              cursor: "pointer",
+              ["&:hover"]: { color: theme.palette.red },
+            }}
+            onClick={(e) => nav("/admin/followOrder/" + params?.row.id)}
+          />
+        </td>
+      ),
     },
   ];
   return (

@@ -54,7 +54,8 @@ const Auth = () => {
       }
       console.log(data1, "222");
       const retToken = await postApi("/login", data1);
-      if (retToken.status === 200) {
+      console.log(retToken);
+      if (retToken.token) {
         login(retToken.token);
         setSuccess(
           signUp ? "success register , please login" : "login success"

@@ -17,6 +17,8 @@ const Products = () => {
   const [productId, setProductId] = React.useState();
   const [files, setFiles] = React.useState([]);
   const [showForm, setShowForm] = React.useState(false);
+  const [currentObj, setCurrentObj] = React.useState({});
+
   const nav = useNavigate();
   const onClose = (refresh) => {
     if (refresh) {
@@ -109,7 +111,8 @@ const Products = () => {
               ["&:hover"]: { color: theme.palette.red },
             }}
             onClick={(e) => {
-              setProductId(params.id);
+              setProductId(params.row.id);
+              setCurrentObj(params.row);
               setShowForm(true);
             }}
           />
@@ -122,6 +125,7 @@ const Products = () => {
       {showForm && (
         <AddProduct
           onClose={onClose}
+          editData={currentObj}
           onsubmit={onAddSubmit}
           setFiles={setFiles}
         />

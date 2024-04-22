@@ -11,12 +11,12 @@ import {
   ImageList,
   ImageListItem,
 } from "@mui/material";
-
+import Carousel from "react-bootstrap/Carousel";
 import { useParams } from "react-router-dom";
 import { postApi } from "../utilis/postApi";
 
 import { ToastContainer, toast } from "react-toastify";
-import { Carousel } from "react-responsive-carousel";
+
 import { backEnd } from "../utilis/config";
 
 export default function DetailedCampaign() {
@@ -59,6 +59,18 @@ export default function DetailedCampaign() {
                   </ImageListItem>
                 ))}
               </ImageList>
+              <Carousel>
+                {item?.images?.map((item) => (
+                  <Carousel.Item>
+                    <img
+                      srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                      src={backEnd + "/image?img=" + item?.url}
+                      alt={item.title}
+                      loading="lazy"
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
             </Box>
             <Card variant="outlined">
               <CardContent>

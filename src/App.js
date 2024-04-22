@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      {isLoggedIn ? (
+      {true ? (
         <Box className="App" sx={{ width: "100%", height: "100%" }}>
           <Stack direction="row">
             <SlideBar />

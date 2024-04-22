@@ -22,6 +22,7 @@ import Campaigns from "./pages/campaigns";
 import DetailedProduct from "./pages/DetailedProduct";
 import DetailedCampaign from "./pages/DetailedCampaign";
 import Orders from "./pages/Orders";
+import FollowOrder from "./pages/FollowOrder";
 
 const darkTheme = createTheme({
   palette: {
@@ -147,7 +148,14 @@ const router = createBrowserRouter([
           </ProductRoute>
         ),
       },
-
+      {
+        path: "admin/followOrder/:id",
+        element: (
+          <ProductRoute auth={true}>
+            <FollowOrder />
+          </ProductRoute>
+        ),
+      },
       {
         path: "admin/orders",
         element: (
