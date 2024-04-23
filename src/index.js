@@ -23,6 +23,7 @@ import DetailedProduct from "./pages/DetailedProduct";
 import DetailedCampaign from "./pages/DetailedCampaign";
 import Orders from "./pages/Orders";
 import FollowOrder from "./pages/FollowOrder";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const darkTheme = createTheme({
   palette: {

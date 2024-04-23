@@ -16,22 +16,13 @@ import React from "react";
 import AutoComplete from "./autoComplete";
 const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
   const theme = useTheme();
-  const [data, setData] = React.useState([]);
-  const [city, setCity] = React.useState([]);
+
+  console.log(editData.start_date.substring(0, 10));
 
   const { register, handleSubmit, formState } = useForm({
-    defaultValues: { city: city },
     mode: "onTouched",
   });
   const { errors } = formState;
-
-  const req = async () => {
-    const res = await postApi("/get_cities");
-    setData(res);
-  };
-  React.useEffect(() => {
-    req();
-  }, []);
 
   return (
     <Box
@@ -74,7 +65,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
               autoComplete="off"
               id="name"
               label="Name"
-              value={editData?.name}
+              defaultValue={editData?.name}
               type="text"
               variant="filled"
               {...register("name", {
@@ -89,7 +80,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
               type="date"
               variant="filled"
               InputLabelProps={{ shrink: true }}
-              value={editData?.start_date}
+              defaultValue={editData.start_date.substring(0, 10)}
               {...register("start_date", {
                 required: "This field is required!",
               })}
@@ -101,8 +92,13 @@ const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
               label="Draw Date"
               type="date"
               variant="filled"
-              value={editData?.draw_date}
-              InputLabelProps={{ shrink: true }}
+              defaultValue={editData.draw_date.substring(0, 10)}
+              InputLabelProps={{
+                shrink: true,
+                inputProps: {
+                  format: "DD:MMM:YYYY",
+                },
+              }}
               {...register("draw_date", {
                 required: "This field is required!",
               })}
@@ -117,7 +113,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
               {...register("prize_name", {
                 required: "This field is required!",
               })}
-              value={editData?.prize_name}
+              defaultValue={editData?.prize_name}
               error={!!errors.prize_name}
               helperText={errors?.prize_name?.message}
             />
@@ -129,7 +125,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
               {...register("prize_url", {
                 required: "This field is required!",
               })}
-              value={editData?.prize_url}
+              defaultValue={editData?.prize_url}
               error={!!errors.prize_url}
               helperText={errors?.prize_url?.message}
             />
@@ -141,7 +137,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
               {...register("remaining_qty", {
                 required: "This field is required!",
               })}
-              value={editData?.remaining_qty}
+              defaultValue={editData?.remaining_qty}
               error={!!errors.remaining_qty}
               helperText={errors?.remaining_qty?.message}
             />
@@ -151,9 +147,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
               multiple
               type="file"
               variant="filled"
-              {...register("images", {
-                required: "This images is required!",
-              })}
+              {...register("images")}
               onChange={(e) => setFiles(e.target.files)}
               error={!!errors.images}
               helperText={errors?.remaining_qty?.message}
@@ -177,7 +171,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
               label="Target"
               type="number"
               variant="filled"
-              value={editData?.target}
+              defaultValue={editData?.target}
               {...register("target", {
                 required: "This field is required!",
               })}
@@ -189,7 +183,7 @@ const AddCampaign = ({ onClose, onsubmit, setFiles, editData }) => {
               label="Note"
               type="text"
               variant="filled"
-              value={editData?.note}
+              defaultValue={editData?.note}
               multiline
               rows={4}
               {...register("note")}

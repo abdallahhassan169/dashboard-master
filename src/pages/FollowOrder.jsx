@@ -10,24 +10,33 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-
+import { useParams } from "react-router-dom";
+import { postApi } from "../utilis/postApi";
 const FollowOrder = () => {
   const [status, setStatus] = useState("Under Process");
+  const [item, setItem] = React.useState({});
 
-  const userInfo = {
-    name: "John Doe",
-    email: "john.doe@example.com",
+  const { id } = useParams();
+  console.log(id);
+  const orderData = async () => {
+    try {
+      const res = await postApi("/order_by_id", { id: id });
+      setItem(res[0].full_data);
+      console.log(res[0].full_data.products, "lllll");
+    } catch (error) {
+      console.error("Error fetching order data:", error);
+    }
   };
+
+  React.useEffect(() => {
+    orderData();
+  }, [id]);
+  const userInfo = item.user;
 
   const orderInfo = {
-    orderId: "123456",
-    items: [
-      { id: 1, name: "Widget", quantity: 2 },
-      { id: 2, name: "Gadget", quantity: 1 },
-      { id: 3, name: "Thingamajig", quantity: 3 },
-    ],
+    orderId: item.order.id,
+    items: item.order.products,
   };
-
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
   };
@@ -62,13 +71,13 @@ const FollowOrder = () => {
         <Typography variant="h5" gutterBottom>
           User Information
         </Typography>
-        <Typography>Name: {userInfo.name}</Typography>
-        <Typography>Email: {userInfo.email}</Typography>
+        <Typography>Name: {userInfo?.name}</Typography>
+        <Typography>Email: {userInfo?.email}</Typography>
 
         <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
           Order Information
         </Typography>
-        <Typography>Order ID: {orderInfo.orderId}</Typography>
+        <Typography>Order ID: {orderInfo?.orderId}</Typography>
 
         <Table>
           <TableHead>
@@ -79,9 +88,9 @@ const FollowOrder = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orderInfo.items.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>{item.name}</TableCell>
+            {orderInfo?.items?.map((item) => (
+              <TableRow key={item?.id}>
+                <TableCell>{item?.name}</TableCell>
                 <TableCell align="center">{item.quantity}</TableCell>
                 <TableCell align="right">{item.quantity}</TableCell>
               </TableRow>

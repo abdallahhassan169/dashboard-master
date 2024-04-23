@@ -11,7 +11,11 @@ import {
   ImageList,
   ImageListItem,
 } from "@mui/material";
-import Carousel from "react-bootstrap/Carousel";
+import {
+  MDBCarousel,
+  MDBCarouselItem,
+  MDBCarouselCaption,
+} from "mdb-react-ui-kit";
 import { useParams } from "react-router-dom";
 import { postApi } from "../utilis/postApi";
 
@@ -39,39 +43,30 @@ export default function DetailedCampaign() {
 
   return (
     <>
+      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <MDBCarousel showIndicators showControls fade>
+          {item?.images?.map((item, idx) => (
+            <MDBCarouselItem itemId={idx}>
+              <img
+                src={backEnd + "/image?img=" + item?.url}
+                className="d-block w-100"
+                alt="..."
+              />
+              <MDBCarouselCaption>
+                <h5>First slide label</h5>
+                <p>
+                  Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </p>
+              </MDBCarouselCaption>
+            </MDBCarouselItem>
+          ))}
+        </MDBCarousel>
+      </div>
       <Box className="detailed-product">
         <Container maxWidth="lg">
           <Stack spacing={4} mt={6}>
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <ImageList
-                sx={{ width: 500, height: 450 }}
-                cols={3}
-                rowHeight={164}
-              >
-                {item?.images?.map((item) => (
-                  <ImageListItem key={item.url}>
-                    <img
-                      srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      src={backEnd + "/image?img=" + item?.url}
-                      alt={item.title}
-                      loading="lazy"
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
-              <Carousel>
-                {item?.images?.map((item) => (
-                  <Carousel.Item>
-                    <img
-                      srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      src={backEnd + "/image?img=" + item?.url}
-                      alt={item.title}
-                      loading="lazy"
-                    />
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-            </Box>
+            <Box sx={{ display: "flex", justifyContent: "center" }}></Box>
+
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h4" align="center" mb={2}>
