@@ -31,24 +31,50 @@ const FollowOrder = () => {
   React.useEffect(() => {
     orderData();
   }, [id]);
-  const userInfo = item.user;
+  const userInfo = item?.user;
 
   const orderInfo = {
-    orderId: item.order.id,
-    items: item.order.products,
+    orderId: item?.order?.id,
+    items: item?.order?.products,
   };
-  const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
+  const handleStatusChange = async (newStatus) => {
+    console.log(newStatus, "hhh");
+    try {
+      // Map status string to status number
+      let statusNumber;
+      switch (newStatus) {
+        case "Under Process":
+          statusNumber = 1;
+          break;
+        case "Delivered":
+          statusNumber = 4;
+          break;
+        case "Cancelled":
+          statusNumber = 3;
+          break;
+        default:
+          statusNumber = 1; // Default to "Under Process" if status is unknown
+      }
+
+      // Make API call to update status
+      const res = await postApi("/change_order_status", {
+        id: id,
+        status: statusNumber,
+      });
+      setStatus(newStatus);
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   };
 
   const getStatusColor = () => {
     switch (status) {
-      case "Delivered":
+      case 4: // Delivered
         return "green";
-      case "Cancelled":
+      case 3: // Cancelled
         return "red";
       default:
-        return "orange"; // Under process
+        return "orange"; // Default to "Under Process"
     }
   };
 
@@ -112,21 +138,21 @@ const FollowOrder = () => {
         <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
           <Button
             variant="contained"
-            onClick={() => handleStatusChange("Under Process")}
+            onClick={() => handleStatusChange(2)}
             color="warning"
           >
             Under Process
           </Button>
           <Button
             variant="contained"
-            onClick={() => handleStatusChange("Delivered")}
+            onClick={() => handleStatusChange(4)}
             color="success"
           >
             Delivered
           </Button>
           <Button
             variant="contained"
-            onClick={() => handleStatusChange("Cancelled")}
+            onClick={() => handleStatusChange(3)}
             color="error"
           >
             Cancelled

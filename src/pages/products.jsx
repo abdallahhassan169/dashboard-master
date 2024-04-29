@@ -142,7 +142,10 @@ const Products = () => {
               color: theme.palette.green,
             },
           }}
-          onClick={() => setShowForm(true)}
+          onClick={() => {
+            setShowForm(true);
+            setCurrentObj({});
+          }}
         >
           <Add sx={{ fontSize: "16px" }} />
           ADD PRODUCT
